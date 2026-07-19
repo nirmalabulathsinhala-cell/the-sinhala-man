@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sinhala FM Font Helper - Interactive Simulator</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Google Fonts for premium typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="glass-bg"></div>
+    <div class="app-container">
+        <!-- App Header -->
+        <header class="app-header">
+            <div class="logo-area">
+                <span class="logo-icon">සිං</span>
+                <div class="logo-text">
+                    <h1>Sinhala FM Font Helper</h1>
+                    <p>macOS Background Engine Simulator</p>
+                </div>
+            </div>
+            <div class="status-indicator">
+                <span class="status-dot pulsing"></span>
+                <span class="status-text">ACTIVE (Simulated)</span>
+            </div>
+        </header>
+
+        <!-- Main Layout Split -->
+        <main class="app-main">
+            <!-- Left Panel: Typing & Visual Output -->
+            <section class="panel editor-panel">
+                <div class="panel-header">
+                    <h2>Interactive Typing Simulator</h2>
+                    <span class="badge">TEST ENVIRONMENT</span>
+                </div>
+                
+                <!-- Input Mode Selector -->
+                <div class="mode-selector-group">
+                    <label>Simulator Input Mode:</label>
+                    <div class="mode-toggle-container">
+                        <button id="mode-qwerty-btn" class="mode-btn active">Direct QWERTY Keyboard</button>
+                        <button id="mode-unicode-btn" class="mode-btn">macOS Sinhala Unicode</button>
+                    </div>
+                </div>
+                
+                <!-- Global Keyboard Shortcut notice -->
+                <div class="shortcut-notice">
+                    <span class="shortcut-badge">Shortcut</span>
+                    <span>Press <kbd>Control</kbd> + <kbd>Option</kbd> + <kbd>S</kbd> globally to toggle the helper App ON/OFF on your Mac!</span>
+                </div>
+                
+                <div class="form-group">
+                    <label for="unicode-input">Type Sinhala Unicode Here:</label>
+                    <p class="field-desc">Use standard macOS Sinhala Wijesekera or Phonetic keyboard</p>
+                    <textarea 
+                        id="unicode-input" 
+                        placeholder="Type Sinhala Unicode (e.g., ක + ෙ = කෙ, ද + ු = දු)..." 
+                        autofocus
+                        autocorrect="off"
+                        autocapitalize="off"
+                        spellcheck="false"
+                        autocomplete="off"
+                    ></textarea>
+                </div>
+
+                <div class="preview-group">
+                    <label>Standard Unicode Display (Visual Reference):</label>
+                    <div id="unicode-preview" class="preview-box unicode-font">
+                        <!-- Shows logical Unicode characters -->
+                    </div>
+                </div>
+
+                <div class="preview-group">
+                    <div class="preview-header">
+                        <label for="fm-preview">Legacy FM Font Display (Active App Screen):</label>
+                        <span class="font-warning">Requires local "FMAbhaya" font installed</span>
+                    </div>
+                    <div id="fm-preview" class="preview-box fm-font" contenteditable="false">
+                        <!-- Rendered with local FMAbhaya font using output ASCII -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Right Panel: Engine Debugger & State Monitor -->
+            <section class="panel debug-panel">
+                <div class="panel-header">
+                    <h2>Keystroke Interceptor & Diff Engine</h2>
+                </div>
+
+                <!-- Live State Variables -->
+                <div class="state-grid">
+                    <div class="state-card">
+                        <span class="state-label">Unicode Buffer (U)</span>
+                        <span id="state-buffer" class="state-value">""</span>
+                    </div>
+                    <div class="state-card">
+                        <span class="state-label">Generated ASCII String</span>
+                        <span id="state-ascii" class="state-value">""</span>
+                    </div>
+                </div>
+
+                <!-- Simulation Action Logs -->
+                <div class="log-section">
+                    <div class="log-header">
+                        <h3>Real-time Event Tap Activity Log</h3>
+                        <button id="clear-logs-btn">Clear Logs</button>
+                    </div>
+                    <div id="activity-log" class="activity-log">
+                        <div class="log-entry system-entry">
+                            <span class="log-time">[System]</span>
+                            <span class="log-msg">CGEventTap listening for key downs...</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mapping Cheatsheet -->
+                <div class="cheatsheet-section">
+                    <h3>Common Ligatures & Reordering Rules</h3>
+                    <div class="cheatsheet-grid">
+                        <div class="cheat-item">
+                            <span class="cheat-label">කෙ (ke)</span>
+                            <span class="cheat-arrow">→</span>
+                            <span class="cheat-val">f + l</span>
+                            <span class="cheat-note">Kombuwa reordered first</span>
+                        </div>
+                        <div class="cheat-item">
+                            <span class="cheat-label">කො (ko)</span>
+                            <span class="cheat-arrow">→</span>
+                            <span class="cheat-val">f + l + d</span>
+                            <span class="cheat-note">Kombuwa + Consonant + Ela-pilla</span>
+                        </div>
+                        <div class="cheat-item">
+                            <span class="cheat-label">දු (du)</span>
+                            <span class="cheat-arrow">→</span>
+                            <span class="cheat-val">ÿ</span>
+                            <span class="cheat-note">Custom ligature glyph</span>
+                        </div>
+                        <div class="cheat-item">
+                            <span class="cheat-label">කු (ku)</span>
+                            <span class="cheat-arrow">→</span>
+                            <span class="cheat-val">l + =</span>
+                            <span class="cheat-note">Custom papilla modifier</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="app-footer">
+            <p>Designed for Sinhala Typesetters & Designers. Open local index.html to test locally. No installation required.</p>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
