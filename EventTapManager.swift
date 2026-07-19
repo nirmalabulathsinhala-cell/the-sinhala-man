@@ -89,7 +89,7 @@ class EventTapManager {
         
         if let runLoopSource = self.runLoopSource {
             CFRunLoopAddSource(CFRunLoopGetCurrent(), runLoopSource, .commonModes)
-            CGEventTapEnable(tap, true)
+            CGEvent.tapEnable(tap: tap, enable: true)
             isRunning = true
             print("CGEventTap started successfully.")
         }
@@ -100,7 +100,7 @@ class EventTapManager {
         guard isRunning else { return }
         
         if let eventTap = eventTap {
-            CGEventTapEnable(eventTap, false)
+            CGEvent.tapEnable(tap: eventTap, enable: false)
         }
         
         if let runLoopSource = runLoopSource {
@@ -117,7 +117,7 @@ class EventTapManager {
     /// Re-enables the event tap if disabled by system timeout.
     private func reEnableTap() {
         guard let eventTap = eventTap else { return }
-        CGEventTapEnable(eventTap, true)
+        CGEvent.tapEnable(tap: eventTap, enable: true)
         print("CGEventTap re-enabled after timeout.")
     }
     
