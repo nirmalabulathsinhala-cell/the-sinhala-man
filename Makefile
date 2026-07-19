@@ -18,6 +18,7 @@ build:
 	lipo -create sinhala-fm-helper-arm64 sinhala-fm-helper-x86 -output "$(MACOS_DIR)/sinhala-fm-helper"
 	rm sinhala-fm-helper-arm64 sinhala-fm-helper-x86
 	cp Info.plist "$(PLIST_FILE)"
+	codesign --force --deep --sign - "$(APP_DIR)"
 	@echo "Build successful! Created $(APP_DIR)"
 
 run: build
