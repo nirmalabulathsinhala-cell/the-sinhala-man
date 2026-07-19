@@ -13,7 +13,10 @@ all: build
 build:
 	@mkdir -p "$(MACOS_DIR)"
 	@mkdir -p "$(RESOURCES_DIR)"
-	swiftc -O $(SOURCES) -o "$(MACOS_DIR)/sinhala-fm-helper" -arch arm64 -arch x86_64
+	swiftc -O $(SOURCES) -target arm64-apple-macosx10.13 -o sinhala-fm-helper-arm64
+	swiftc -O $(SOURCES) -target x86_64-apple-macosx10.13 -o sinhala-fm-helper-x86
+	lipo -create sinhala-fm-helper-arm64 sinhala-fm-helper-x86 -output "$(MACOS_DIR)/sinhala-fm-helper"
+	rm sinhala-fm-helper-arm64 sinhala-fm-helper-x86
 	cp Info.plist "$(PLIST_FILE)"
 	@echo "Build successful! Created $(APP_DIR)"
 
