@@ -13,7 +13,7 @@ all: build
 build:
 	@mkdir -p "$(MACOS_DIR)"
 	@mkdir -p "$(RESOURCES_DIR)"
-	swiftc -O $(SOURCES) -o "$(MACOS_DIR)/sinhala-fm-helper"
+	swiftc -O $(SOURCES) -o "$(MACOS_DIR)/sinhala-fm-helper" -arch arm64 -arch x86_64
 	cp Info.plist "$(PLIST_FILE)"
 	@echo "Build successful! Created $(APP_DIR)"
 
