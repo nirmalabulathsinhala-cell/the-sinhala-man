@@ -72,7 +72,7 @@ class EventTapManager {
         
         let selfPointer = UnsafeMutableRawPointer(Unmanaged.passUnretained(self).toOpaque())
         
-        guard let tap = CGEventTapCreate(
+        guard let tap = CGEvent.tapCreate(
             tap: .cghidEventTap,
             place: .headInsertEventTap,
             options: .defaultTap,
